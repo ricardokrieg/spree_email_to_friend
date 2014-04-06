@@ -46,10 +46,13 @@ class Spree::EmailSenderController < Spree::StoreController
       class_name = "Spree::#{(params[:type].titleize)}".constantize
       return false if params[:id].blank?
 
-      if class_name.respond_to?('find_by_slug')
+      if @object.nil? and class_name.respond_to?('find_by_permalink')
+        @object ||= class_name.find_by_permalink(params[:id])
+      end
+      if @object.nil? and class_name.respond_to?('find_by_slug')
         @object ||= class_name.find_by_slug(params[:id])
       end
-      if class_name.respond_to?('get_by_param')
+      if @object.nil? and class_name.respond_to?('get_by_param')
         @object ||= class_name.get_by_param(params[:id])
       end
 
