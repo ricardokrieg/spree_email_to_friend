@@ -6,11 +6,10 @@ class Spree::EmailSenderController < Spree::StoreController
 
   def send_mail
     if request.get?
-      @mail_to_friend = Spree::MailToFriend.new(:sender_email => spree_current_user.try(:email))
-
-      respond_to do |format|
-        format.html {}
-        format.js {render layout: false}
+      if request.get?
+        @mail_to_friend = Spree::MailToFriend.new(:sender_email => spree_current_user.try(:email))
+      else
+        mail_to_friend
       end
     else
       mail_to_friend
