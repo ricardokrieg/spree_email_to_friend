@@ -10,7 +10,7 @@ class Spree::EmailSenderController < Spree::StoreController
 
       respond_to do |format|
         format.html {}
-        format.json {render layout: false}
+        format.js {render layout: false}
       end
     else
       mail_to_friend
